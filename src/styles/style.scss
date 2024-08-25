@@ -1,0 +1,346 @@
+* {
+  font-family: IRANSans;
+}
+body {
+  background: linear-gradient(to top, #c4e4ff, rgb(255, 255, 255)) no-repeat;
+  padding: 8px;
+  overflow: hidden;
+}
+// @font-face {
+//     font-family: IRANSan;
+//     src: url(IRANSans_Medium.ttf);
+//   }
+@mixin btns($position) {
+  font-size: 40px;
+  font-weight: light;
+  width: 70px;
+  border: none;
+  margin: 5px;
+  height: 71px;
+  position: $position;
+  transition: 0.4s;
+  background-color: #ff006200;
+  color: rgb(0, 0, 0);
+  border-radius: 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: #b1b1b156;
+  }
+  &:active {
+    transform: scale(0.8);
+  }
+}
+
+@mixin animation-btn($radius) {
+  transform: scale(1);
+  transition: 0.1s;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  &::before {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #0077ff52;
+    transform: scale(1.3);
+    border-radius: $radius;
+    opacity: 0;
+  }
+  &:active {
+    transform: scale(0.85);
+    &::before {
+      animation-name: fade-btn;
+      animation-duration: 0.25s;
+      @keyframes fade-btn {
+        0% {
+          opacity: 1;
+          transform: scale(0.5);
+        }
+      }
+    }
+  }
+}
+
+$primaryBtn: #0079ff;
+$font-size: 40px;
+.calculator {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 15px;
+  padding: 10px;
+  margin: 1% auto 0 auto;
+  gap: 0;
+  width: 500px;
+  box-shadow: 0px 7px 10px 0px rgba(0, 0, 0, 0.133),
+    0px 7px 10px 0px rgba(0, 0, 0, 0.133) inset;
+  background-color: rgba(255, 255, 255, 0.621);
+}
+
+#b-1 {
+  position: absolute;
+  top: 10%;
+  left: 20%;
+  width: 40vh;
+  height: 40vh;
+  transform: scale(2);
+  border-radius: 100vh;
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(40px);
+  background-color: #41c9e2;
+}
+#b-2 {
+  position: absolute;
+  bottom: 10%;
+  right: 20%;
+  width: 40vh;
+  height: 40vh;
+  border-radius: 100vh;
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(40px);
+  background-color: #faa300;
+}
+
+.dial-pad {
+  display: grid;
+  margin: 10px;
+  gap: 10px;
+  grid-template-columns: 6fr 1fr;
+}
+.numbers {
+  grid-column-start: 1;
+  grid-column-end: 1;
+}
+.number {
+  @include animation-btn(100px);
+  cursor: pointer;
+  font-size: 40px;
+  background-color: rgb(241, 243, 255);
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.258);
+  border: none;
+  border-radius: 100px;
+  margin: 5px;
+  height: 100px;
+  width: 100px;
+  transform: scale(1);
+  &:hover {
+    background-color: rgba(237, 237, 237, 0.589);
+  }
+}
+
+.operators {
+  grid-column-start: 2;
+  grid-column-end: 2;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  .equal {
+    background-color: #00dfa2;
+  }
+  button {
+    @include animation-btn(30px);
+    cursor: pointer;
+    font-size: 30px;
+    margin: 5px;
+    height: 70px;
+    width: 70px;
+    background-color: #515151;
+    border: none;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 20px;
+    color: white;
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+  .clear-btn {
+    background-color: #ff0060;
+  }
+}
+.screen {
+  margin: 7px auto 10px auto;
+  width: 95%;
+  border-radius: 20px;
+  display: flex;
+  align-content: center;
+  border-radius: 10px;
+  padding: 5px 0;
+  font-size: $font-size;
+  input {
+    width: 80%;
+    font-size: $font-size;
+    border: 2px solid #0079ff;
+    outline: none;
+    background-color: rgb(238, 238, 238);
+    border-radius: 14px;
+    padding: 10px 20px;
+    background-color: rgb(241, 243, 255);
+  }
+}
+
+.history-btn {
+  cursor: pointer;
+  width: 20%;
+  border: none;
+  display: block;
+  margin: 0 0 0 10px;
+  font-size: 20px;
+  color: white;
+  text-align: center;
+  background-color: #0079ff;
+  border-radius: 14px;
+  position: relative;
+  @include animation-btn(30px);
+  svg {
+    width: 30px;
+    height: 30px;
+    fill: rgb(255, 255, 255);
+  }
+}
+.history-panel {
+  border: none;
+  position: absolute;
+  width: 500px;
+  padding: 10px;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.545);
+  backdrop-filter: blur(30px);
+  z-index: 1;
+  animation-name: history;
+  animation-duration: 0.4s;
+  animation-direction: alternate;
+  // display: none;
+}
+@keyframes history {
+  0% {
+    opacity: 0;
+    height: 0;
+    top: 40px;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.delete-item {
+  background-color: red;
+  @include animation-btn(100px);
+  &:hover {
+    opacity: 0.7;
+  }
+  &:focus {
+    opacity: 1;
+  }
+}
+.empty-img-container {
+  margin: 10px auto;
+  padding: 90px 0 0 0;
+  width: 80%;
+  text-align: center;
+  img {
+    width: 60%;
+    margin: 0 auto;
+  }
+}
+
+.history-item-container {
+  overflow-y: auto;
+  // width: 95%;
+  padding: 10px 5px;
+  margin: 10px;
+  height: 74vh;
+  .history-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 35px;
+    background-color: #b1b1b137;
+    border-radius: 14px;
+    padding: 15px 10px 10px 20px;
+    margin: 10px 0;
+    position: relative;
+    .delete-item {
+      display: block;
+      width: 40px;
+      height: 40px;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
+      color: rgb(255, 255, 255);
+      background-color: #ff0062e9;
+      padding: 10px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+  }
+}
+.history-item-short {
+  font-size: 26px !important ;
+}
+.history-header {
+  background-color: rgba(176, 176, 176, 0.262);
+  position: sticky;
+  display: flex;
+  justify-content: space-between;
+  top: 0;
+  right: 0;
+  left: 0;
+  border-radius: 12px;
+  padding: 12px 10px 10px 10px;
+  text-align: right;
+  .history-title {
+    display: block;
+    font-size: 20px;
+    padding: 0 10px;
+    font-weight: light;
+
+    
+  }
+}
+.close-panel-btn {
+  @include btns(relative);
+  font-size: 30px !important;
+  margin: 5px;
+}
+.second-screen {
+  color: #00dfa2;
+  font-weight: bold;
+  margin: 0 auto 0px auto;
+  width: 95%;
+  font-size: $font-size;
+  border-radius: 20px;
+  align-content: center;
+  border-radius: 10px;
+  padding: 5px 14px;
+}
+.result {
+  top: 0;
+  position: absolute;
+  font-size: $font-size;
+  font-weight: bold;
+  color: #00dfa2;
+  animation-name: slide;
+  animation-duration: 500ms;
+  animation-direction: alternate;
+  @keyframes slide {
+    0% {
+      opacity: 0.2;
+    }
+    50% {
+      top: -10px;
+    }
+  }
+}
+.result-small {
+  font-size: 27px;
+}
