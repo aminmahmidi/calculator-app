@@ -1,34 +1,31 @@
 import "../src/styles/style.css";
 import "../src/fontawesome-free-6.5.2-web/css/all.css";
-import { createContext, useEffect, useState, useRef } from "react";
-import Input from "./Input";
-import Buttons from "./Buttons";
-// console.log(HistoryContext)
+import AllNumbers from "./AllNumbers";
+import AllOperators from "./AllOperators";
+import { useState, createContext } from "react";
+export const CalculatorContext = createContext();
 function App() {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
+  const [input, setInput] = useState('');
+  const DisplayValue = (e) => {
+    setInput(e.target.value);
+  }
   return (
+    <CalculatorContext.Provider value={{input, setInput}}>
       <div className="App">
         <div className="calculator">
-          <form onSubmit={handleSubmit}>
-            {/* history panel */}
-            {/* End of history panel */}
-
-            {/* Calculator header */}
-            <Input />
-            {/* End of Calculator header */}
-
-            {/* Numbers */}
-            <Buttons />
-            {/* End of Numbers */}
-
-            {/* Operators */}
-
-            {/* End of Operators */}
-          </form>
+          <div className="screen ">
+            <input type="text" value={input} readOnly onChange={DisplayValue} />
+            <button type="button" className="history-btn">
+              <i className="fa fa-history"></i>
+            </button>
+          </div>
+          <div className="dial-pad">
+            <AllNumbers />
+            <AllOperators />
+          </div>
         </div>
       </div>
+    </CalculatorContext.Provider>
   );
 }
 
