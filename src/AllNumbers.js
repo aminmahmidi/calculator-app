@@ -7,6 +7,9 @@ const AllNumbers = () => {
     const value = e.target.textContent;
     setInput(input + value);
   };
+    const clear = () => {
+      setInput("");
+    };
   return (
     <div className="numbers">
       {Numbers.map((number) => {
@@ -21,6 +24,9 @@ const AllNumbers = () => {
           </button>
         );
       })}
+      <button type="button" className="number"  onClick={clear}>
+        c
+      </button>
     </div>
   );
 };
