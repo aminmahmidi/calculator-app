@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { CalculatorContext } from "./App";
 
 const HistoryPanel = () => {
-  const { historyToggle, setHistoryToggle, result, setResult } =
+  const {setHistoryToggle, result, setResult} =
     useContext(CalculatorContext);
   
   const handleDelete = (index) => {
@@ -36,7 +36,7 @@ const HistoryPanel = () => {
             </ul>
           ) : (
             <div> kkk </div>
-          )}{" "}
+          )}
         </div>
       </div>
     </>
